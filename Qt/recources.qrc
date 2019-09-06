@@ -1,0 +1,15 @@
+<RCC>
+  <qresource prefix="graphics">
+    <file>../icons/switch-hov.png</file>
+    <file>../icons/switch-act.png</file>
+    <file>../icons/switch.png</file>
+    <file>../icons/hold-act.png</file>
+    <file>../icons/click-act.png</file>
+    <file>../icons/hold-hov.png</file>
+    <file>../icons/click-hov.png</file>
+    <file>../icons/Keyboard.png</file>
+    <file>../icons/hold.png</file>
+    <file>../icons/click.png</file>
+    <file>../icons/background.png</file>
+  </qresource>
+</RCC>
