@@ -156,9 +156,11 @@ class Ui_MainWindow(object):
         self.comboBox_hold.addItem(icon, "")
 
         # Slots and signals
-        self.comboBox_hold.currentTextChanged.connect(self.holdBoxChanged)
-        self.comboBox_click.currentTextChanged.connect(self.clickBoxChanged)
+        self.comboBox_hold.currentTextChanged.connect(self.holdComboBoxChanged)
+        self.comboBox_click.currentTextChanged.connect(self.clickComboBoxChanged)
         self.click_mouse.toggled.connect(self.checkBoxToggled)
+        self.hold_mouse.toggled.connect(self.checkBoxToggled)
+        self.main_switch.toggled.connect(self.checkBoxToggled)
 
         # Background
         self.background = QtWidgets.QFrame(self.centralwidget)
@@ -180,11 +182,11 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def clickBoxChanged(self):
+    def clickComboBoxChanged(self):
         clickHotkey = self.comboBox_click.currentText()
         print("Click: ", clickHotkey)
 
-    def holdBoxChanged(self):
+    def holdComboBoxChanged(self):
         holdHotkey = self.comboBox_hold.currentText()
         print("Hold: ", holdHotkey)
 
@@ -198,22 +200,29 @@ class Ui_MainWindow(object):
             self.hold_on = True
         else:
             self.hold_on = False
+
+        if self.main_switch.isChecked():
+            self.main_switch_on = True
+        else:
+            self.main_switch_on = False
+
         print("Click: ", self.click_on)
         print("Hold: ", self.hold_on)
+        print("Switch: ", self.main_switch_on)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "mousey"))
-        self.comboBox_click.setItemText(0, _translate("MainWindow", "Shift-R"))
-        self.comboBox_click.setItemText(1, _translate("MainWindow", "Shift"))
-        self.comboBox_click.setItemText(2, _translate("MainWindow", "Ctrl"))
-        self.comboBox_click.setItemText(3, _translate("MainWindow", "Alt"))
+        self.comboBox_click.setItemText(0, _translate("MainWindow", "Shift"))
+        self.comboBox_click.setItemText(1, _translate("MainWindow", "Ctrl"))
+        self.comboBox_click.setItemText(2, _translate("MainWindow", "Alt"))
+        self.comboBox_click.setItemText(3, _translate("MainWindow", "Shift-R"))
         self.comboBox_click.setItemText(4, _translate("MainWindow", "Ctrl-R"))
         self.comboBox_click.setItemText(5, _translate("MainWindow", "Alt-gr"))
-        self.comboBox_hold.setItemText(0, _translate("MainWindow", "Shift-R"))
+        self.comboBox_hold.setItemText(0, _translate("MainWindow", "Ctrl"))
         self.comboBox_hold.setItemText(1, _translate("MainWindow", "Shift"))
-        self.comboBox_hold.setItemText(2, _translate("MainWindow", "Ctrl"))
-        self.comboBox_hold.setItemText(3, _translate("MainWindow", "Alt"))
+        self.comboBox_hold.setItemText(2, _translate("MainWindow", "Alt"))
+        self.comboBox_hold.setItemText(3, _translate("MainWindow", "Shift-R"))
         self.comboBox_hold.setItemText(4, _translate("MainWindow", "Ctrl-R"))
         self.comboBox_hold.setItemText(5, _translate("MainWindow", "Alt-gr"))
 
