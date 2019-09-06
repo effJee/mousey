@@ -199,6 +199,7 @@ class Ui_MainWindow(object):
         self.comboBox_hold.setItemText(3, _translate("MainWindow", "Alt"))
         self.comboBox_hold.setItemText(4, _translate("MainWindow", "Ctrl-R"))
         self.comboBox_hold.setItemText(5, _translate("MainWindow", "Alt-gr"))
+
 import resources_rc
 
 
