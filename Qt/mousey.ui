@@ -184,7 +184,7 @@ QComboBox QAbstractItemView {
       <string>Shift-R</string>
      </property>
      <property name="icon">
-      <iconset resource="recources.qrc">
+      <iconset resource="resources.qrc">
        <normaloff>:/graphics/icons/Keyboard.png</normaloff>:/graphics/icons/Keyboard.png</iconset>
      </property>
     </item>
@@ -193,7 +193,7 @@ QComboBox QAbstractItemView {
       <string>Shift</string>
      </property>
      <property name="icon">
-      <iconset resource="recources.qrc">
+      <iconset resource="resources.qrc">
        <normaloff>:/graphics/icons/Keyboard.png</normaloff>:/graphics/icons/Keyboard.png</iconset>
      </property>
     </item>
@@ -202,7 +202,7 @@ QComboBox QAbstractItemView {
       <string>Ctrl</string>
      </property>
      <property name="icon">
-      <iconset resource="recources.qrc">
+      <iconset resource="resources.qrc">
        <normaloff>:/graphics/icons/Keyboard.png</normaloff>:/graphics/icons/Keyboard.png</iconset>
      </property>
     </item>
@@ -211,7 +211,7 @@ QComboBox QAbstractItemView {
       <string>Alt</string>
      </property>
      <property name="icon">
-      <iconset resource="recources.qrc">
+      <iconset resource="resources.qrc">
        <normaloff>:/graphics/icons/Keyboard.png</normaloff>:/graphics/icons/Keyboard.png</iconset>
      </property>
     </item>
@@ -220,7 +220,7 @@ QComboBox QAbstractItemView {
       <string>Ctrl-R</string>
      </property>
      <property name="icon">
-      <iconset resource="recources.qrc">
+      <iconset resource="resources.qrc">
        <normaloff>:/graphics/icons/Keyboard.png</normaloff>:/graphics/icons/Keyboard.png</iconset>
      </property>
     </item>
@@ -229,7 +229,7 @@ QComboBox QAbstractItemView {
       <string>Alt-gr</string>
      </property>
      <property name="icon">
-      <iconset resource="recources.qrc">
+      <iconset resource="resources.qrc">
        <normaloff>:/graphics/icons/Keyboard.png</normaloff>:/graphics/icons/Keyboard.png</iconset>
      </property>
     </item>
@@ -287,7 +287,7 @@ QComboBox QAbstractItemView {
       <string>Shift-R</string>
      </property>
      <property name="icon">
-      <iconset resource="recources.qrc">
+      <iconset resource="resources.qrc">
        <normaloff>:/graphics/icons/Keyboard.png</normaloff>:/graphics/icons/Keyboard.png</iconset>
      </property>
     </item>
@@ -296,7 +296,7 @@ QComboBox QAbstractItemView {
       <string>Shift</string>
      </property>
      <property name="icon">
-      <iconset resource="recources.qrc">
+      <iconset resource="resources.qrc">
        <normaloff>:/graphics/icons/Keyboard.png</normaloff>:/graphics/icons/Keyboard.png</iconset>
      </property>
     </item>
@@ -305,7 +305,7 @@ QComboBox QAbstractItemView {
       <string>Ctrl</string>
      </property>
      <property name="icon">
-      <iconset resource="recources.qrc">
+      <iconset resource="resources.qrc">
        <normaloff>:/graphics/icons/Keyboard.png</normaloff>:/graphics/icons/Keyboard.png</iconset>
      </property>
     </item>
@@ -314,7 +314,7 @@ QComboBox QAbstractItemView {
       <string>Alt</string>
      </property>
      <property name="icon">
-      <iconset resource="recources.qrc">
+      <iconset resource="resources.qrc">
        <normaloff>:/graphics/icons/Keyboard.png</normaloff>:/graphics/icons/Keyboard.png</iconset>
      </property>
     </item>
@@ -323,7 +323,7 @@ QComboBox QAbstractItemView {
       <string>Ctrl-R</string>
      </property>
      <property name="icon">
-      <iconset resource="recources.qrc">
+      <iconset resource="resources.qrc">
        <normaloff>:/graphics/icons/Keyboard.png</normaloff>:/graphics/icons/Keyboard.png</iconset>
      </property>
     </item>
@@ -332,7 +332,7 @@ QComboBox QAbstractItemView {
       <string>Alt-gr</string>
      </property>
      <property name="icon">
-      <iconset resource="recources.qrc">
+      <iconset resource="resources.qrc">
        <normaloff>:/graphics/icons/Keyboard.png</normaloff>:/graphics/icons/Keyboard.png</iconset>
      </property>
     </item>
@@ -368,7 +368,7 @@ QComboBox QAbstractItemView {
   </widget>
  </widget>
  <resources>
-  <include location="recources.qrc"/>
+  <include location="resources.qrc"/>
   <include location="../../../../Desktop/ui/resources.qrc"/>
  </resources>
  <connections/>
