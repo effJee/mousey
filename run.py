@@ -7,6 +7,9 @@ class Ui_MainWindow(object):
     hold_on = False
     main_switch_on = False
 
+    clickHotkey = ""
+    holdHotkey = ""
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(220, 240)
@@ -183,16 +186,17 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def clickComboBoxChanged(self):
-        clickHotkey = self.comboBox_click.currentText()
-        print("Click: ", clickHotkey)
+        self.clickHotkey = self.comboBox_click.currentText()
+        print("Click: ", self.clickHotkey)
 
     def holdComboBoxChanged(self):
-        holdHotkey = self.comboBox_hold.currentText()
-        print("Hold: ", holdHotkey)
+        self.holdHotkey = self.comboBox_hold.currentText()
+        print("Hold: ", self.holdHotkey)
 
     def checkBoxToggled(self):
         if self.click_mouse.isChecked():
             self.click_on = True
+            # self.comboBox_click.setCurrentIndex(-1)
         else:
             self.click_on = False
 
@@ -209,6 +213,7 @@ class Ui_MainWindow(object):
         print("Click: ", self.click_on)
         print("Hold: ", self.hold_on)
         print("Switch: ", self.main_switch_on)
+        print("--------")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -219,8 +224,8 @@ class Ui_MainWindow(object):
         self.comboBox_click.setItemText(3, _translate("MainWindow", "Shift-R"))
         self.comboBox_click.setItemText(4, _translate("MainWindow", "Ctrl-R"))
         self.comboBox_click.setItemText(5, _translate("MainWindow", "Alt-gr"))
-        self.comboBox_hold.setItemText(0, _translate("MainWindow", "Ctrl"))
-        self.comboBox_hold.setItemText(1, _translate("MainWindow", "Shift"))
+        self.comboBox_hold.setItemText(0, _translate("MainWindow", "Shift"))
+        self.comboBox_hold.setItemText(1, _translate("MainWindow", "Ctrl"))
         self.comboBox_hold.setItemText(2, _translate("MainWindow", "Alt"))
         self.comboBox_hold.setItemText(3, _translate("MainWindow", "Shift-R"))
         self.comboBox_hold.setItemText(4, _translate("MainWindow", "Ctrl-R"))
