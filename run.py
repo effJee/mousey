@@ -10,6 +10,8 @@ class Ui_MainWindow(object):
     clickHotkey = ""
     holdHotkey = ""
 
+    keyIndexList = [0, 1, 2, 3, 4, 5]
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(220, 240)
@@ -122,6 +124,7 @@ class Ui_MainWindow(object):
         self.comboBox_click.addItem(icon, "")
         self.comboBox_click.addItem(icon, "")
         self.comboBox_click.addItem(icon, "")
+        self.comboBox_click.setCurrentIndex(2)  # Left alt key
 
         # Hold hotkey selection list (combobox)
         self.comboBox_hold = QtWidgets.QComboBox(self.centralwidget)
@@ -188,15 +191,24 @@ class Ui_MainWindow(object):
     def clickComboBoxChanged(self):
         self.clickHotkey = self.comboBox_click.currentText()
         print("Click: ", self.clickHotkey)
+        if self.clickHotkey == self.holdHotkey:
+            # this way prevents from setting negative key index since
+            # keyIndexList[-1] will give us the last list item
+            newIndex = self.keyIndexList[self.comboBox_hold.currentIndex() - 1]
+            self.comboBox_hold.setCurrentIndex(newIndex)
 
     def holdComboBoxChanged(self):
         self.holdHotkey = self.comboBox_hold.currentText()
         print("Hold: ", self.holdHotkey)
+        if self.holdHotkey == self.clickHotkey:
+            # this way prevents from setting negative key index since
+            # keyIndexList[-1] will give us the last list item
+            newIndex = self.keyIndexList[self.comboBox_click.currentIndex() - 1]
+            self.comboBox_click.setCurrentIndex(newIndex)
 
     def checkBoxToggled(self):
         if self.click_mouse.isChecked():
             self.click_on = True
-            # self.comboBox_click.setCurrentIndex(-1)
         else:
             self.click_on = False
 
