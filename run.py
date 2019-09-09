@@ -5,7 +5,7 @@ class Ui_MainWindow(object):
 
     click_on = False
     hold_on = False
-    main_switch_on = False
+    mainSwitch_on = False
 
     clickHotkey = ""
     holdHotkey = ""
@@ -188,6 +188,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    # ComboBox slots
     def clickComboBoxChanged(self):
         self.clickHotkey = self.comboBox_click.currentText()
         print("Click: ", self.clickHotkey)
@@ -206,6 +207,7 @@ class Ui_MainWindow(object):
             newIndex = self.keyIndexList[self.comboBox_click.currentIndex() - 1]
             self.comboBox_click.setCurrentIndex(newIndex)
 
+    # CheckBox slots
     def checkBoxToggled(self):
         if self.click_mouse.isChecked():
             self.click_on = True
@@ -218,13 +220,13 @@ class Ui_MainWindow(object):
             self.hold_on = False
 
         if self.main_switch.isChecked():
-            self.main_switch_on = True
+            self.mainSwitch_on = True
         else:
-            self.main_switch_on = False
+            self.mainSwitch_on = False
 
         print("Click: ", self.click_on)
         print("Hold: ", self.hold_on)
-        print("Switch: ", self.main_switch_on)
+        print("Switch: ", self.mainSwitch_on)
         print("--------")
 
     def retranslateUi(self, MainWindow):
@@ -235,20 +237,66 @@ class Ui_MainWindow(object):
         self.comboBox_click.setItemText(2, _translate("MainWindow", "Alt"))
         self.comboBox_click.setItemText(3, _translate("MainWindow", "Shift-R"))
         self.comboBox_click.setItemText(4, _translate("MainWindow", "Ctrl-R"))
-        self.comboBox_click.setItemText(5, _translate("MainWindow", "Alt-gr"))
+        self.comboBox_click.setItemText(5, _translate("MainWindow", "Alt-R"))
         self.comboBox_hold.setItemText(0, _translate("MainWindow", "Shift"))
         self.comboBox_hold.setItemText(1, _translate("MainWindow", "Ctrl"))
         self.comboBox_hold.setItemText(2, _translate("MainWindow", "Alt"))
         self.comboBox_hold.setItemText(3, _translate("MainWindow", "Shift-R"))
         self.comboBox_hold.setItemText(4, _translate("MainWindow", "Ctrl-R"))
-        self.comboBox_hold.setItemText(5, _translate("MainWindow", "Alt-gr"))
+        self.comboBox_hold.setItemText(5, _translate("MainWindow", "Alt-R"))
+
+
+def on_release(key):
+    global clickHotkey_active
+    global holdHotkey_active
+
+    if ui.mainSwitch_on:
+
+        if ui.click_on:
+            if key == hotkeysDict[ui.clickHotkey]:
+                if not clickHotkey_active:
+                    clickHotkey_active = True
+                    holdHotkey_active = False
+                else:
+                    clickHotkey_active = False
+                print("Click: ", clickHotkey_active)
+                print("Hold: ", holdHotkey_active)
+
+        if ui.hold_on:
+            if key == hotkeysDict[ui.holdHotkey]:
+                if not holdHotkey_active:
+                    holdHotkey_active = True
+                    clickHotkey_active = False
+                else:
+                    holdHotkey_active = False
+                print("Click: ", clickHotkey_active)
+                print("Hold: ", holdHotkey_active)
+                print(".......")
 
 
 if __name__ == "__main__":
+    from pynput.mouse import Button, Controller
+    from pynput import keyboard
     import sys
+
+    hotkeysDict = {"Shift": keyboard.Key.shift_l,
+                   "Ctrl": keyboard.Key.ctrl_l,
+                   "Alt": keyboard.Key.alt_l,
+                   "Shift-R": keyboard.Key.shift_r,
+                   "Ctrl-R": keyboard.Key.ctrl_r,
+                   "Alt-R": keyboard.Key.alt_r}
+
+    clickHotkey_active = False
+    holdHotkey_active = False
+
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
+
+    listener = keyboard.Listener(on_release=on_release)
+    listener.start()
+    mouse = Controller()
+
     sys.exit(app.exec_())
