@@ -7,12 +7,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     keyIndexList = [0, 1, 2, 3, 4, 5]
 
-    click_on = False
-    hold_on = False
-    mainSwitch_on = False
-
-    # clickHotkey = ""
-    # holdHotkey = ""
+    # Linux keys scancodes
+    keysDict = {"Shift": 50,
+                "Ctrl": 37,
+                "Alt": 64,
+                "Shift-R": 62,
+                "Ctrl-R": 105,
+                "Alt-R": 108}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -68,6 +69,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         print("Hold: ", self.hold_on)
         print("Switch: ", self.mainSwitch_on)
         print("--------")
+
+    def keyPressEvent(self, event):
+        keyScancode = event.nativeScanCode()
+
+        if keyScancode == self.keysDict[self.clickHotkey]:
+            print("Gruby idz spac")
 
 
 if __name__ == "__main__":
