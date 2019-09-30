@@ -1,13 +1,42 @@
+from PyQt5.QtCore import QThread, pyqtSignal
 from layout import Ui_MainWindow
 from PyQt5 import QtWidgets
 import sys
+import time
+
+
+class FunctionThread(QThread):
+    def __init__(self):
+        super().__init__()
+        self.click_active = False
+        self.hold_active = False
+
+    def handleClickSignal(self):
+        self.hold_active = False
+        self.click_active = not self.click_active
+        print("********")
+        print("Hold: ", self.hold_active)
+        print("Click: ", self.click_active)
+        print("********")
+
+    def handleHoldSignal(self):
+        self.click_active = False
+        self.hold_active = not self.hold_active
+        print("********")
+        print("Hold: ", self.hold_active)
+        print("Click: ", self.click_active)
+        print("********")
+
+    def run(self):
+        print("Thread working!")
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
-
+    clickSignal = pyqtSignal()
+    holdSignal = pyqtSignal()
     keyIndexList = [0, 1, 2, 3, 4, 5]
 
-    # Linux keys scancodes
+    # Linux key scancodes
     keysDict = {"Shift": 50,
                 "Ctrl": 37,
                 "Alt": 64,
@@ -19,15 +48,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         super().__init__(*args, **kwargs)
         self.setupUi(self)
 
+        self.clickHotkey = self.comboBox_click.currentText()
+        self.holdHotkey = self.comboBox_hold.currentText()
+        self.worker = FunctionThread()
+        self.worker.start()
+
         # Slots and signals
         self.comboBox_hold.currentTextChanged.connect(self.holdComboBoxChanged)
         self.comboBox_click.currentTextChanged.connect(self.clickComboBoxChanged)
         self.click_mouse.toggled.connect(self.checkBoxToggled)
         self.hold_mouse.toggled.connect(self.checkBoxToggled)
         self.main_switch.toggled.connect(self.checkBoxToggled)
-
-        self.clickHotkey = self.comboBox_click.currentText()
-        self.holdHotkey = self.comboBox_hold.currentText()
+        self.clickSignal.connect(self.worker.handleClickSignal)
+        self.holdSignal.connect(self.worker.handleHoldSignal)
 
     # ComboBox slots
     def clickComboBoxChanged(self):
@@ -71,10 +104,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         print("--------")
 
     def keyPressEvent(self, event):
-        keyScancode = event.nativeScanCode()
+        if self.mainSwitch_on:
+            keyScancode = event.nativeScanCode()
 
-        if keyScancode == self.keysDict[self.clickHotkey]:
-            print("Gruby idz spac")
+            if self.click_on and keyScancode == self.keysDict[self.clickHotkey]:
+                print("click click")
+                self.clickSignal.emit()
+
+            if self.hold_on and keyScancode == self.keysDict[self.holdHotkey]:
+                print("hold hold")
+                self.holdSignal.emit()
 
 
 if __name__ == "__main__":
