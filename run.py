@@ -4,7 +4,6 @@ from layout import Ui_MainWindow
 from PyQt5 import QtWidgets
 import threading
 import pyautogui
-import time
 import sys
 
 
@@ -50,7 +49,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # ComboBox slot
     def clickComboBoxChanged(self):
         self.clickHotkey = self.comboBox_click.currentText()
-        print("Click: ", self.clickHotkey)
         if self.clickHotkey == self.holdHotkey:
             # this way prevents from setting negative key index since
             # keyIndexList[-1] will give us the last list item
@@ -60,7 +58,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # ComboBox slot
     def holdComboBoxChanged(self):
         self.holdHotkey = self.comboBox_hold.currentText()
-        print("Hold: ", self.holdHotkey)
         if self.holdHotkey == self.clickHotkey:
             # this way prevents from setting negative key index since
             # keyIndexList[-1] will give us the last list item
@@ -83,30 +80,24 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if not self.main_on:
             self.click_active = False
             self.hold_active = False
-        print("main on: ", self.main_on)
 
     def clickCheckBoxToggled(self):
         self.click_on = not self.click_on
         if not self.click_on:
             self.click_active = False
-        print("click on: ", self.click_on)
 
     def holdCheckBoxToggled(self):
         self.hold_on = not self.hold_on
         if not self.hold_on:
             self.hold_active = False
-        print("hold on: ", self.hold_on)
 
     def keyPressEvent(self, event):
         keyScancode = event.nativeScanCode()
 
         if keyScancode == self.keysDict[self.clickHotkey]:
-            print("click click")
-            print(threading.currentThread().getName())
             self.clickSignal.emit()
 
         if keyScancode == self.keysDict[self.holdHotkey]:
-            print("hold hold")
             self.holdSignal.emit()
 
 
@@ -121,22 +112,18 @@ class WorkerThread(QThread):
         # print(threading.currentThread().getName())
         while True:
             if window.click_active:
+                """Hey, there"""
                 # self.mouse.click(Button.left)
                 # self.mouse.press(Button.left)
                 # self.mouse.release(Button.left)
                 # pyautogui.click()
-                print("clicking...")
-                time.sleep(.100)
             elif window.hold_active:
                 # self.mouse.press(Button.left)
-                print("Hold pressed")
                 self.pressed = True
                 # time.sleep(1)
             elif self.pressed:
                 # self.mouse.release(Button.left)
-                print("Hold released")
                 self.pressed = False
-                # time.sleep(2.5)
 
 
 if __name__ == "__main__":
