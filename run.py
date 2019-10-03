@@ -1,9 +1,13 @@
 from PyQt5.QtCore import QThread, pyqtSignal
-from pynput.mouse import Button, Controller
-from layout import Ui_MainWindow
 from PyQt5 import QtWidgets
-import threading
-import pyautogui
+from layout import Ui_MainWindow
+
+from pynput.mouse import Button, Controller
+from pynput.keyboard import Key
+from pynput import keyboard
+
+# import threading
+import time
 import sys
 
 
@@ -15,16 +19,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     holdSignal = pyqtSignal()
 
     # Linux key scancodes
-    keysDict = {"Shift": 50,
-                "Ctrl": 37,
-                "Alt": 64,
-                "Shift-R": 62,
-                "Ctrl-R": 105,
-                "Alt-R": 108}
+    keysDict = {"Shift": Key.shift_l,
+                "Ctrl": Key.ctrl_l,
+                "Alt": Key.alt_l,
+                "Shift-R": Key.shift_r,
+                "Ctrl-R": Key.ctrl_r,
+                "Alt-R": Key.alt_r}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setupUi(self)
+
+        self.listener = keyboard.Listener(on_release=self.keyPressed)
+        self.listener.start()
 
         # Flags
         self.click_active = False
@@ -91,13 +98,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if not self.hold_on:
             self.hold_active = False
 
-    def keyPressEvent(self, event):
-        keyScancode = event.nativeScanCode()
+    def keyPressed(self, key):
 
-        if keyScancode == self.keysDict[self.clickHotkey]:
+        if key == self.keysDict[self.clickHotkey]:
             self.clickSignal.emit()
 
-        if keyScancode == self.keysDict[self.holdHotkey]:
+        if key == self.keysDict[self.holdHotkey]:
             self.holdSignal.emit()
 
 
@@ -112,18 +118,20 @@ class WorkerThread(QThread):
         # print(threading.currentThread().getName())
         while True:
             if window.click_active:
-                """Hey, there"""
-                # self.mouse.click(Button.left)
+                self.mouse.click(Button.left)
+                # print("click, click")
+                time.sleep(.100)
                 # self.mouse.press(Button.left)
                 # self.mouse.release(Button.left)
-                # pyautogui.click()
-            elif window.hold_active:
-                # self.mouse.press(Button.left)
+            elif window.hold_active and not self.pressed:
+                self.mouse.press(Button.left)
+                # print("Pressed")
                 self.pressed = True
-                # time.sleep(1)
-            elif self.pressed:
-                # self.mouse.release(Button.left)
+            elif self.pressed and not window.hold_active:
+                self.mouse.release(Button.left)
+                # print("Realsed")
                 self.pressed = False
+            time.sleep(.100)
 
 
 if __name__ == "__main__":
