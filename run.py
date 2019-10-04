@@ -6,6 +6,8 @@ from pynput.mouse import Button, Controller
 from pynput.keyboard import Key
 from pynput import keyboard
 
+import pyautogui
+
 # import threading
 import time
 import sys
@@ -18,7 +20,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     clickSignal = pyqtSignal()
     holdSignal = pyqtSignal()
 
-    # Linux key scancodes
+    # Key scancodes
     keysDict = {"Shift": Key.shift_l,
                 "Ctrl": Key.ctrl_l,
                 "Alt": Key.alt_l,
@@ -119,10 +121,9 @@ class WorkerThread(QThread):
         while True:
             if window.click_active:
                 self.mouse.click(Button.left)
-                # print("click, click")
-                time.sleep(.100)
-                # self.mouse.press(Button.left)
-                # self.mouse.release(Button.left)
+                # pyautogui.click(button='left')
+                # print("clicking")
+                # time.sleep(.100)
             elif window.hold_active and not self.pressed:
                 self.mouse.press(Button.left)
                 # print("Pressed")
